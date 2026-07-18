@@ -1,12 +1,13 @@
 import tw from '@/lib/tw';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 const timeFilters = ['Today', 'Tomorrow', 'This Week', 'All'];
-const categoryFilters = ['All', 'Wedding', 'Seven Blessings', 'Engagement'];
+const categoryFilters = ['All', 'Wedding', 'Seven Blessings', 'Engagement', 'Gift Giving'];
 
 const events = [
   {
@@ -35,70 +36,62 @@ export default function Home() {
 
   return (
     <SafeAreaView style={tw`flex-1 bg-white`} edges={['top']}>
-       <StatusBar style="dark" />
+      <StatusBar style="dark" />
       <ScrollView style={tw`flex-1`} showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={tw`flex-row items-center justify-between px-5 pt-4 pb-2`}>
           <View>
-            <Text style={tw`text-gray-500 text-base`}>Nahid! 👋</Text>
+            <Text style={tw`text-gray-500 text-base`}>Moshe! 👋</Text>
             <Text style={tw`text-2xl font-bold text-gray-900 mt-1`}>
               Discover Celebrations
             </Text>
           </View>
           <TouchableOpacity
-            style={tw`w-11 h-11 rounded-full bg-gray-100 items-center justify-center`}
+            onPress={() => router.push("/(tabs)/search")}
+            style={tw`w-11 h-11 rounded-xl border border-gray-300 items-center justify-center`}
           >
-            <Ionicons name="search" size={20} color="#374151" />
+            <Ionicons name="search" size={20} color="#000000" />
           </TouchableOpacity>
         </View>
 
         {/* Time Filters */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={tw`px-5 mt-4`}
-          contentContainerStyle={tw`gap-2`}
-        >
+        <View style={tw`flex-row px-3 mt-2 gap-2`}>
           {timeFilters.map((filter) => (
             <TouchableOpacity
               key={filter}
               onPress={() => setActiveTimeFilter(filter)}
-              style={tw`px-4 py-2 rounded-full ${
-                activeTimeFilter === filter ? 'bg-amber-500' : 'bg-gray-100'
-              }`}
+              style={tw`flex-1 py-2 rounded-full items-center ${activeTimeFilter === filter ? 'bg-amber-500' : 'bg-gray-100'
+                }`}
             >
               <Text
-                style={tw`text-sm font-semibold ${
-                  activeTimeFilter === filter ? 'text-white' : 'text-gray-600'
-                }`}
+                style={tw`text-sm font-semibold ${activeTimeFilter === filter ? 'text-white' : 'text-gray-600'
+                  }`}
               >
                 {filter}
               </Text>
             </TouchableOpacity>
           ))}
-        </ScrollView>
+        </View>
 
         {/* Category Filters */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          style={tw`px-5 mt-3`}
-          contentContainerStyle={tw`gap-2`}
+          style={tw`mt-3`}
+          contentContainerStyle={tw`gap-2 px-3`}
         >
           {categoryFilters.map((filter) => (
             <TouchableOpacity
               key={filter}
               onPress={() => setActiveCategory(filter)}
-              style={tw`px-4 py-2 rounded-full border ${
-                activeCategory === filter
-                  ? 'bg-gray-900 border-gray-900'
-                  : 'bg-white border-gray-300'
-              }`}
+              style={tw`px-4 py-2 rounded-full border ${activeCategory === filter
+                ? 'bg-gray-900 border-gray-900'
+                : 'bg-white border-gray-300'
+                }`}
             >
               <Text
-                style={tw`text-sm font-semibold ${
-                  activeCategory === filter ? 'text-white' : 'text-gray-600'
-                }`}
+                style={tw`text-sm font-semibold ${activeCategory === filter ? 'text-white' : 'text-gray-600'
+                  }`}
               >
                 {filter}
               </Text>
@@ -109,8 +102,12 @@ export default function Home() {
         {/* Event Cards */}
         <View style={tw`px-5 mt-5 gap-4 pb-4`}>
           {events.map((event) => (
-            <View
+            <TouchableOpacity
               key={event.id}
+              onPress={() => router.push({
+                pathname: '/event/[id]',
+                params: { id: event.id },
+              })}
               style={tw`rounded-2xl overflow-hidden bg-white shadow-sm border border-gray-100`}
             >
               <View style={tw`h-44 relative`}>
@@ -146,7 +143,7 @@ export default function Home() {
                   <Text style={tw`text-gray-500 text-sm`}>{event.location}</Text>
                 </View>
               </View>
-            </View>
+            </TouchableOpacity>
           ))}
         </View>
       </ScrollView>

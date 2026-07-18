@@ -47,7 +47,7 @@ export default function TabLayout() {
           title: '',
           tabBarIcon: () => (
             <View
-              style={tw`w-14 h-14 rounded-full bg-amber-500 items-center justify-center -mt-8 shadow-lg`}
+              style={tw`w-14 h-14 rounded-full bg-amber-500 items-center justify-center -mt-6 shadow-lg`}
             >
               <Ionicons name="add" size={28} color="#fff" />
             </View>
