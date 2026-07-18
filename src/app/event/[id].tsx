@@ -93,7 +93,7 @@ export default function EventDetail() {
                         <View style={tw`w-9 h-9 rounded-md bg-[#FEF7E8] items-center justify-center`}>
                             <Ionicons name="calendar" size={16} color="#F7B115" />
                         </View>
-                        <Text style={tw`text-gray-700 text-base`}>
+                        <Text style={tw`text-secondary text-base`}>
                             {event.date} · {event.time}
                         </Text>
                     </View>
@@ -103,7 +103,7 @@ export default function EventDetail() {
                         <View style={tw`w-9 h-9 rounded-md bg-[#FEF7E8] items-center justify-center`}>
                             <Ionicons name="location" size={16} color="#F7B115" />
                         </View>
-                        <Text style={tw`text-gray-700 text-base flex-1`}>{event.venue}</Text>
+                        <Text style={tw`text-secondary text-base flex-1`}>{event.venue}</Text>
                     </View>
 
                     {/* About Section */}
