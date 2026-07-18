@@ -14,7 +14,7 @@ export default function Index() {
           style={tw`w-full h-full absolute`}
           resizeMode="cover"
         />
-        <View style={tw`absolute inset-0 bg-black/30`} />
+         <View style={tw`absolute inset-0 bg-black/30`} />
 
         <SafeAreaView style={tw`flex-1 justify-end p-6`}>
           <Text style={tw`text-white text-3xl  font-bold leading-tight`}>
@@ -45,7 +45,7 @@ export default function Index() {
             </TouchableOpacity>
 
             {/* Guest User */}
-            <TouchableOpacity style={tw`items-center pt-2`}>
+            <TouchableOpacity onPress={()=> router.push("/(tabs)/home")} style={tw`items-center pt-2`}>
               <Text style={tw`text-amber-500 font-semibold text-base`}>Guest User</Text>
             </TouchableOpacity>
 
