@@ -9,6 +9,6 @@ export const engagementSchema: EventFormSchema = {
         groomSection,
         parentInLawSection(1),
         parentInLawSection(2),
-        venueDateSection,
+        venueDateSection(),
     ],
 };

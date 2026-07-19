@@ -8,6 +8,6 @@ export const sevenBlessingsSchema: EventFormSchema = {
     coverImageSection, 
     parentInLawSection(1), 
     parentInLawSection(2), 
-    venueDateSection
+    venueDateSection()
   ],
 };

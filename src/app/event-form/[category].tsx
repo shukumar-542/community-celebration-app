@@ -3,6 +3,7 @@ import BackButton from '@/components/ui/BackButton';
 import { formSchemas } from '@/constants/form-schemas';
 import tw from '@/lib/tw';
 import { useLocalSearchParams } from 'expo-router';
+import { Text } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -10,7 +11,13 @@ export default function EventForm() {
   const { category } = useLocalSearchParams<{ category: string }>();
   const schema = formSchemas[category];
 
-  if (!schema) return null;
+  if (!schema || !schema.sections) {
+    return (
+      <SafeAreaView style={tw`flex-1 bg-white items-center justify-center`}>
+        <Text style={tw`text-gray-400`}>Form not found for "{category}"</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={tw`flex-1 bg-white`} >

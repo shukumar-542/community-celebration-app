@@ -14,7 +14,7 @@ export function useDebouncedRouter(delay = 800) {
         isNavigating.current = false;
       }, delay);
     },
-    [router, delay]
+    [router, delay ]
   );
 
   const back = useCallback(() => {
