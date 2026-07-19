@@ -18,29 +18,42 @@ export const groomSection: FormSection = {
   ],
 };
 
-export const parentInLawSection = (number: 1 | 2): FormSection => ({
+export const parentInLawSection = (
+  number: 1 | 2,
+  options?: { simple?: boolean }
+): FormSection => ({
   title: `Parent-in-law #${number}`,
-  fields: [
-    {
-      key: `parentInLaw${number}FullName`,
-      label: 'Full Name',
-      type: 'text',
-      placeholder: 'e.g. Rabbi Moshe Levy',
-      required: true,
-    },
-    {
-      key: `parentInLaw${number}SonOfRabbi`,
-      label: 'Son of Rabbi',
-      type: 'text',
-      placeholder: 'e.g. Rabbi Yitzchak Levy',
-    },
-    {
-      key: `parentInLaw${number}SonInLawOfRabbi`,
-      label: 'Son-in-law of Rabbi',
-      type: 'text',
-      placeholder: 'e.g. Rabbi Avraham Klein',
-    },
-  ],
+  fields: options?.simple
+    ? [
+        {
+          key: `parentInLaw${number}FullName`,
+          label: 'Full Name',
+          type: 'text',
+          placeholder: number === 1 ? 'e.g. Rabbi Shlomo Levin' : 'e.g. Rabbi Dovid Berger',
+          required: true,
+        },
+      ]
+    : [
+        {
+          key: `parentInLaw${number}FullName`,
+          label: 'Full Name',
+          type: 'text',
+          placeholder: 'e.g. Rabbi Moshe Levy',
+          required: true,
+        },
+        {
+          key: `parentInLaw${number}SonOfRabbi`,
+          label: 'Son of Rabbi',
+          type: 'text',
+          placeholder: 'e.g. Rabbi Yitzchak Levy',
+        },
+        {
+          key: `parentInLaw${number}SonInLawOfRabbi`,
+          label: 'Son-in-law of Rabbi',
+          type: 'text',
+          placeholder: 'e.g. Rabbi Avraham Klein',
+        },
+      ],
 });
 
 
@@ -245,3 +258,92 @@ export const shivaDetailsSection: FormSection = {
     { key: 'shivaDate', label: 'Date', type: 'date', required: true },
   ],
 };
+export const locationDateSection: FormSection = {
+  title: 'Location & Date',
+  fields: [
+    {
+      key: 'venueAddress',
+      label: 'Address',
+      type: 'location',
+      placeholder: 'Full address',
+      required: true,
+    },
+    {
+      key: 'whoseHouse',
+      label: 'Whose House',
+      type: 'text',
+      placeholder: 'e.g. Host family residence',
+    },
+    { key: 'eventDate', label: 'Date', type: 'date', required: true },
+  ],
+};
+
+export const familiesSection: FormSection = {
+  title: 'Families',
+  fields: [
+    {
+      key: 'parentInLaw1Name',
+      label: 'Parent-in-law #1 Name',
+      type: 'text',
+      placeholder: 'e.g. Rabbi Boruch Lefkowitz',
+      required: true,
+    },
+    {
+      key: 'parentInLaw2Name',
+      label: 'Parent-in-law #2 Name',
+      type: 'text',
+      placeholder: 'e.g. Rabbi Alter Schwartz',
+      required: true,
+    },
+  ],
+};
+
+export const locationScheduleSection: FormSection = {
+  title: 'Location & Schedule',
+  fields: [
+    {
+      key: 'venueAddress',
+      label: 'Address',
+      type: 'location',
+      placeholder: 'Synagogue address',
+      required: true,
+    },
+    {
+      key: 'whoseHouse',
+      label: 'Whose House',
+      type: 'text',
+      placeholder: "e.g. Home of the groom's father",
+    },
+    { key: 'eventDate', label: 'Date', type: 'date', required: true },
+    { key: 'morningPrayerTime', label: 'Morning Prayer Time', type: 'time' },
+    {
+      key: 'ladiesKiddush',
+      label: "Ladies' Kiddush (optional)",
+      type: 'text',
+      placeholder: 'e.g. the Schwartz residence, 12:00 PM',
+    },
+  ],
+};
+export const locationDateCombinedSection = (options?: {
+  timeLabel?: string;
+  addressPlaceholder?: string;
+}): FormSection => ({
+  title: 'Location & Date',
+  fields: [
+    {
+      key: 'venueAddress',
+      label: 'Address',
+      type: 'location',
+      placeholder: options?.addressPlaceholder ?? 'Full address',
+      required: true,
+    },
+    {
+      key: 'whoseHouse',
+      label: 'Whose House',
+      type: 'text',
+      placeholder: 'e.g. Home of the father',
+    },
+    { key: 'eventDate', label: 'Date', type: 'date', required: true },
+    { key: 'eventTime', label: options?.timeLabel ?? 'Time', type: 'time' },
+  ],
+});
