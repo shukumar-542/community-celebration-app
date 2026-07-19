@@ -41,7 +41,7 @@ export default function ImageField({ field, control }: Props) {
               onPress={pickImage}
               style={tw`border ${
                 error ? 'border-red-400' : 'border-gray-300'
-              } border-dashed rounded-2xl items-center justify-center py-8 px-4 bg-gray-50`}
+              } border-dashed rounded-2xl items-center justify-center py-8  px-4 `}
             >
               {value ? (
                 <Image source={{ uri: value }} style={tw`w-full h-40 rounded-xl`} resizeMode="cover" />

@@ -1,10 +1,10 @@
 import DynamicForm from '@/components/forms/DynamicForm';
+import BackButton from '@/components/ui/BackButton';
 import { formSchemas } from '@/constants/form-schemas';
 import tw from '@/lib/tw';
 import { useLocalSearchParams } from 'expo-router';
-import { ScrollView, Text } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import BackButton from '@/components/ui/BackButton';
 
 export default function EventForm() {
   const { category } = useLocalSearchParams<{ category: string }>();
@@ -13,16 +13,17 @@ export default function EventForm() {
   if (!schema) return null;
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-white`} edges={['bottom']}>
-      <ScrollView
-        style={tw`flex-1 px-5 pt-4`}
-        contentContainerStyle={tw`pb-6`}
+    <SafeAreaView style={tw`flex-1 bg-white`} >
+      <KeyboardAwareScrollView
+        style={tw`flex-1 px-5`}
+        contentContainerStyle={tw`pb-4`}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+        bottomOffset={0}
       >
-
         <BackButton title={schema.title} />
         <DynamicForm schema={schema} onSubmit={(data) => console.log(data)} />
-      </ScrollView>
+      </KeyboardAwareScrollView>
     </SafeAreaView>
   );
 }

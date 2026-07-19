@@ -4,8 +4,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useCallback, useEffect, useState } from 'react';
 import { useColorScheme, View } from 'react-native';
+import { KeyboardProvider } from 'react-native-keyboard-controller';
 import '../global.css';
-
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -39,6 +39,7 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <KeyboardProvider>
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <StatusBar style={colorScheme === 'dark' ? 'light' : 'dark'} />
         <Stack screenOptions={{ headerShown: false }}>
@@ -47,6 +48,7 @@ export default function RootLayout() {
           <Stack.Screen name="(tabs)" />
         </Stack>
       </View>
+      </KeyboardProvider>
     </ThemeProvider>
   );
 }

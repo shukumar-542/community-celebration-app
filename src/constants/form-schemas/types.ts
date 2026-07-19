@@ -19,5 +19,5 @@ export interface FormSection {
 export interface EventFormSchema {
   category: string;
   title: string;
-  sections: FormSection[];   // ← এই লাইনটা নিশ্চিত করো আছে (fields না)
+  sections: FormSection[];  
 }
