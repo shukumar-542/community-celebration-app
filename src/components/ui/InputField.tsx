@@ -25,7 +25,7 @@ const InputField = ({
 
   return (
     <View>
-      <Text style={tw`text-lg font-normal text-gray-900 mb-1`}>{label}</Text>
+      <Text style={tw`text-base font-normal text-gray-900 mb-1`}>{label}</Text>
 
       <View
         style={[

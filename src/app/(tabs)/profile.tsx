@@ -2,6 +2,7 @@ import tw from '@/lib/tw';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useRef } from 'react';
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -15,14 +16,24 @@ const stats = [
 
 export default function Profile() {
   const router = useRouter();
+  const isNavigating = useRef(false);
+
+  const navigateOnce = (path: string) => {
+    if (isNavigating.current) return;
+    isNavigating.current = true;
+    router.push(path as any);
+    setTimeout(() => {
+      isNavigating.current = false;
+    }, 800);
+  };
 
   const menuItems = [
-  { icon: 'person-outline', label: 'Profile Setting', onPress: () => router.push("/(settings)/editProfile" as any) },
-  { icon: 'lock-closed-outline', label: 'Change password', onPress: () => router.push("/(settings)/changePasswordFromSettings" as any) },
-  { icon: 'information-circle-outline', label: 'About Us', onPress: () => router.push("/(settings)/about-us" as any) },
-  { icon: 'document-lock-outline', label: 'Privacy Policy', onPress: () => router.push("/(settings)/privacyPolicy" as any) },
-  { icon: 'document-text-outline', label: 'Terms and Conditions', onPress: () => router.push("/(settings)/termsCondition" as any) },
-]; 
+    { icon: 'person-outline', label: 'Profile Setting', onPress: () => navigateOnce('/(settings)/editProfile') },
+    { icon: 'lock-closed-outline', label: 'Change password', onPress: () => navigateOnce('/(settings)/changePasswordFromSettings') },
+    { icon: 'information-circle-outline', label: 'About Us', onPress: () => navigateOnce('/(settings)/about-us') },
+    { icon: 'document-lock-outline', label: 'Privacy Policy', onPress: () => navigateOnce('/(settings)/privacyPolicy') },
+    { icon: 'document-text-outline', label: 'Terms and Conditions', onPress: () => navigateOnce('/(settings)/termsCondition') },
+  ];
 
   return (
     <SafeAreaView style={tw`flex-1 bg-white`} edges={['top']}>
@@ -65,10 +76,9 @@ export default function Profile() {
           {menuItems.map((item, index) => (
             <TouchableOpacity
               key={item.label}
-               onPress={item.onPress}
-              style={tw`flex-row items-center justify-between px-4 py-4 ${
-                index !== menuItems.length - 1 ? 'border-b border-gray-100' : ''
-              }`}
+              onPress={item.onPress}
+              style={tw`flex-row items-center justify-between px-4 py-4 ${index !== menuItems.length - 1 ? 'border-b border-gray-100' : ''
+                }`}
             >
               <View style={tw`flex-row items-center gap-3`}>
                 <Ionicons name={item.icon as any} size={20} color="#374151" />

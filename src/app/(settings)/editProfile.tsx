@@ -1,116 +1,106 @@
 import BackButton from '@/components/ui/BackButton';
 import Button from '@/components/ui/Button';
+import InputField from '@/components/ui/InputField';
+import tw from '@/lib/tw';
+import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
 import { MapPin, Phone, User } from 'lucide-react-native';
 import { useState } from 'react';
-import { ScrollView, Text, TextInput, View } from 'react-native';
+import { Image, ScrollView, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function ProfileSetting() {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [name, setName] = useState('Shukumar');
+  const [phone, setPhone] = useState('+16462713111');
+  const [address, setAddress] = useState('123 Main Street, Dhaka');
+  const [avatar, setAvatar] = useState<string | null>(
+    'https://images.unsplash.com/photo-1633332755192-727a05c4013d'
+  );
+  const [loading, setLoading] = useState(false);
 
+  const pickImage = async () => {
+    const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (!permission.granted) {
+      alert('Photo library access is needed to change your profile picture.');
+      return;
+    }
 
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ['images'],
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 0.8,
+    });
 
-
-
-
-  const handleSave = async () => {
-    
+    if (!result.canceled && result.assets?.[0]) {
+      setAvatar(result.assets[0].uri);
+    }
   };
 
-  
+  const handleSave = async () => {
+    setLoading(true);
+    try {
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }} edges={['top','bottom']}>
-      <View style={{ flex: 1, paddingHorizontal: 16 }}>
+    <SafeAreaView style={tw`flex-1 bg-white`} edges={['top', 'bottom']}>
+      <ScrollView
+        style={tw`flex-1 px-5`}
+        contentContainerStyle={tw`pb-6`}
+        showsVerticalScrollIndicator={false}
+      >
         <BackButton title="Profile Setting" />
 
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: 60, flexGrow: 1, justifyContent: 'center' }}
-        >
-          {/* Name */}
-          <View style={{ marginBottom: 16 }}>
-            <Text style={{ fontFamily: "Inter_600SemiBold", fontSize: 14, color: '#0F0B18', marginBottom: 8 }}>
-              Name
-            </Text>
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: '#F3E8FF20',
-              borderRadius: 12,
-              paddingHorizontal: 14,
-              paddingVertical: 14,
-              gap: 10,
-              borderWidth: 1,
-              borderColor: '#F3F4F6',
-            }}>
-              <User size={18} color="#9CA3AF" />
-              <TextInput
-                value={name}
-                onChangeText={setName}
-                style={{ fontFamily: "Inter_400Regular", flex: 1, fontSize: 14, color: '#0F0B18' }}
-              />
-            </View>
+        {/* Avatar */}
+        <View style={tw`items-center mb-8`}>
+          <View style={tw`relative`}>
+            <Image
+              source={{ uri: avatar ?? undefined }}
+              style={tw`w-24 h-24 rounded-full bg-gray-100`}
+            />
+            <TouchableOpacity
+              onPress={pickImage}
+              style={tw`absolute bottom-0 right-0 w-8 h-8 rounded-full bg-amber-500 items-center justify-center border-2 border-white`}
+            >
+              <Ionicons name="camera" size={16} color="#fff" />
+            </TouchableOpacity>
           </View>
-
-          {/* Mobile Number */}
-          <View style={{ marginBottom: 16 }}>
-            <Text style={{ fontFamily: "Inter_600SemiBold", fontSize: 14, color: '#0F0B18', marginBottom: 8 }}>
-              Mobile Number
-            </Text>
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: '#F3E8FF20',
-              borderRadius: 12,
-              paddingHorizontal: 14,
-              paddingVertical: 14,
-              gap: 10,
-              borderWidth: 1,
-              borderColor: '#F3F4F6',
-            }}>
-              <Phone size={18} color="#9CA3AF" />
-              <TextInput
-                value={phone}
-                onChangeText={setPhone}
-                keyboardType="phone-pad"
-                style={{ fontFamily: "Inter_400Regular", flex: 1, fontSize: 14, color: '#0F0B18' }}
-              />
-            </View>
-          </View>
-
-          {/* Address */}
-          <View style={{ marginBottom: 16 }}>
-            <Text style={{ fontFamily: "Inter_600SemiBold", fontSize: 14, color: '#0F0B18', marginBottom: 8 }}>
-              Address
-            </Text>
-            <View style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              backgroundColor: '#F3E8FF20',
-              borderRadius: 12,
-              paddingHorizontal: 14,
-              paddingVertical: 14,
-              gap: 10,
-              borderWidth: 1,
-              borderColor: '#F3F4F6',
-            }}>
-              <MapPin size={18} color="#9CA3AF" />
-              <TextInput
-                value={address}
-                onChangeText={setAddress}
-                style={{ fontFamily: "Inter_400Regular", flex: 1, fontSize: 14, color: '#0F0B18' }}
-              />
-            </View>
-          </View>
-        </ScrollView>
-
-        {/* Save Button */}
-        <View style={{ paddingBottom: 16 }}>
-          <Button text="Save"  />
         </View>
+
+        {/* Form Fields */}
+        <InputField
+          label="Full Name"
+          Icon={User}
+          value={name}
+          onChangeText={setName}
+          placeholder="Your full name"
+        />
+
+        <InputField
+          label="Mobile Number"
+          Icon={Phone}
+          value={phone}
+          onChangeText={setPhone}
+          placeholder="Phone number"
+          keyboardType="phone-pad"
+        />
+
+        <InputField
+          label="Address"
+          Icon={MapPin}
+          value={address}
+          onChangeText={setAddress}
+          placeholder="Your address"
+        />
+      </ScrollView>
+
+      <View style={tw`px-5 pb-4 pt-2 border-t border-gray-100`}>
+        <Button text={loading ? 'Saving...' : 'Save'} onPress={handleSave} loading={loading} />
       </View>
     </SafeAreaView>
   );
