@@ -26,7 +26,7 @@ export default function ImageField({ field, control }: Props) {
 
           const result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
-            allowsEditing: false, // crop mandatory থাকবে না
+            allowsEditing: false, 
             quality: 0.8,
           });
 

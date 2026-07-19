@@ -24,6 +24,7 @@ export default function TextField({ field, control }: Props) {
             value={value}
             onChangeText={onChange}
             placeholder={field.placeholder ?? field.label}
+            placeholderTextColor="#9ca3af"
             multiline={field.type === 'textarea'}
             style={tw`border ${
               error ? 'border-red-400' : 'border-gray-300'

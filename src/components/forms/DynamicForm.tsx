@@ -1,5 +1,6 @@
 import { EventFormSchema } from '@/constants/form-schemas/types';
 import tw from '@/lib/tw';
+import { Ionicons } from '@expo/vector-icons';
 import { useForm } from 'react-hook-form';
 import { Text, TouchableOpacity, View } from 'react-native';
 import DateField from './fields/DateField';
@@ -45,9 +46,10 @@ export default function DynamicForm({ schema, onSubmit }: Props) {
 
             <TouchableOpacity
                 onPress={handleSubmit(onSubmit)}
-                style={tw`bg-amber-500 py-4 rounded-full items-center mt-2`}
+                style={tw`bg-primary py-3 rounded-full items-center mt-2 flex-row justify-center gap-2`}
             >
-                <Text style={tw`text-white font-bold text-base`}>Review Submission →</Text>
+                <Text style={tw`text-white font-bold text-base`}>Review Submission</Text>
+                <Ionicons name="arrow-forward" size={20} color="#FFFFFF" />
             </TouchableOpacity>
         </View>
     );
