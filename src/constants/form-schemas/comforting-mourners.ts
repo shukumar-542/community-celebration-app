@@ -4,5 +4,10 @@ import { EventFormSchema } from './types';
 export const comfortingMournersSchema: EventFormSchema = {
   category: 'comforting-mourners',
   title: 'Comforting Mourners',
-  sections: [coverImageSection, deceasedSection, mournersSection, shivaDetailsSection],
-};
+  sections: [
+    coverImageSection, 
+    deceasedSection, 
+    mournersSection, 
+    shivaDetailsSection
+  ],
+};  

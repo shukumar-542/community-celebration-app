@@ -4,33 +4,21 @@ import tw from '@/lib/tw';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import { Lock, Mail, User } from 'lucide-react-native';
+import { Lock, Mail } from 'lucide-react-native';
 import { useState } from 'react';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-controller';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export default function Register() {
-  const [fullName, setFullName] = useState('shukumar');
-  const [email, setEmail] = useState('shukumar@example.com');
-  const [password, setPassword] = useState('123456');
-  const [confirmPassword, setConfirmPassword] = useState('123456');
-
-  const [fullNameError, setFullNameError] = useState('');
+export default function Login() {
+  const [email, setEmail] = useState('jhon@example.com');
+  const [password, setPassword] = useState('password123');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
-
   const [loading, setLoading] = useState(false);
 
   const validate = () => {
     let valid = true;
-
-    if (!fullName.trim()) {
-      setFullNameError('Full name is required');
-      valid = false;
-    }
-
     if (!email.trim()) {
       setEmailError('Email is required');
       valid = false;
@@ -38,33 +26,20 @@ export default function Register() {
       setEmailError('Enter a valid email');
       valid = false;
     }
-
     if (!password.trim()) {
       setPasswordError('Password is required');
       valid = false;
-    } else if (password.length < 6) {
-      setPasswordError('Password must be at least 6 characters');
-      valid = false;
     }
-
-    if (confirmPassword !== password) {
-      setConfirmPasswordError('Passwords do not match');
-      valid = false;
-    }
-
     return valid;
   };
 
-  const handleRegister = async () => {
+  const handleLogin = async () => {
     if (!validate()) return;
+    router.push('/(tabs)/home' as any);
 
     setLoading(true);
-    router.push({
-      pathname: '/(auth)/OtpVerification',
-      params: { email, purpose: 'register' },
-    });
     try {
-      // API call 
+      // API call
     } catch (e) {
       console.warn(e);
     } finally {
@@ -79,10 +54,7 @@ export default function Register() {
       <KeyboardAwareScrollView
         showsVerticalScrollIndicator={false}
         keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{
-          flexGrow: 1,
-          paddingHorizontal: 20,
-        }}
+        contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 20 }}
         bottomOffset={20}
       >
         {/* Back Button */}
@@ -94,22 +66,8 @@ export default function Register() {
         </TouchableOpacity>
 
         {/* Title */}
-        <Text style={tw`text-2xl font-bold text-gray-900 mb-1`}>Create Account</Text>
-        <Text style={tw`text-gray-500 text-base mb-6`}>Join the Jewish community today</Text>
-
-        <InputField
-          label="Full Name"
-          Icon={User}
-          placeholder="Sarah Goldstein"
-          value={fullName}
-          onChangeText={(val) => {
-            setFullName(val);
-            if (fullNameError) setFullNameError('');
-          }}
-        />
-        {fullNameError ? (
-          <Text style={tw`text-red-500 text-xs mb-2 -mt-2`}>{fullNameError}</Text>
-        ) : null}
+        <Text style={tw`text-2xl font-bold text-gray-900 mb-1`}>Welcome Back</Text>
+        <Text style={tw`text-gray-500 text-base mb-6`}>Sign in to your Jewish account</Text>
 
         <InputField
           label="Email"
@@ -142,28 +100,23 @@ export default function Register() {
           <Text style={tw`text-red-500 text-xs mb-2 -mt-2`}>{passwordError}</Text>
         ) : null}
 
-        <InputField
-          label="Confirm Password"
-          Icon={Lock}
-          placeholder="••••••••"
-          value={confirmPassword}
-          onChangeText={(val) => {
-            setConfirmPassword(val);
-            if (confirmPasswordError) setConfirmPasswordError('');
-          }}
-          secureTextEntry
-        />
-        {confirmPasswordError ? (
-          <Text style={tw`text-red-500 text-xs mb-4 -mt-2`}>{confirmPasswordError}</Text>
-        ) : (
-          <Text style={tw`mb-4`} />
-        )}
+        <TouchableOpacity
+          onPress={() => router.push('/(auth)/forgetPassword' as any)}
+          style={tw`self-end mb-6`}
+        >
+          <Text style={tw`text-amber-500 font-medium`}>Forgot password?</Text>
+        </TouchableOpacity>
 
-        <Button
-          text={loading ? 'Creating account...' : 'Create Account'}
-          onPress={handleRegister}
-          loading={loading}
-        />
+        {/* Login Button */}
+        <Button text={loading ? 'Signing in...' : 'Sign In'} onPress={handleLogin} loading={loading} />
+
+        {/* Register Link */}
+        <View style={tw`flex-row items-center justify-center mt-4`}>
+          <Text style={tw`text-sm text-gray-500`}>Don't have an account? </Text>
+          <TouchableOpacity onPress={() => router.push('/(auth)/register' as any)}>
+            <Text style={tw`text-amber-500 font-medium`}>Register</Text>
+          </TouchableOpacity>
+        </View>
       </KeyboardAwareScrollView>
     </SafeAreaView>
   );

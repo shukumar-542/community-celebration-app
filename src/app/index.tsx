@@ -14,7 +14,7 @@ export default function Index() {
           style={tw`w-full h-full absolute`}
           resizeMode="cover"
         />
-         <View style={tw`absolute inset-0 bg-black/30`} />
+        <View style={tw`absolute inset-0 bg-black/30`} />
 
         <SafeAreaView style={tw`flex-1 justify-end p-6`}>
           <Text style={tw`text-white text-3xl  font-bold leading-tight`}>
@@ -35,17 +35,18 @@ export default function Index() {
 
           <View style={tw`gap-3`}>
             {/* Create Account Button */}
-           <Button text="Create Account" onPress={() => router.push('(auth)/signup' as any)} />
+            <Button text="Create Account" onPress={() => router.push('(auth)/register' as any)} />
 
             {/* Sign In Button */}
             <TouchableOpacity
+              onPress={() => router.push('(auth)/login' as any)}
               style={tw`bg-white border border-gray-300 py-4 rounded-full items-center`}
             >
               <Text style={tw`text-gray-900 font-semibold text-base`}>Sign In</Text>
             </TouchableOpacity>
 
             {/* Guest User */}
-            <TouchableOpacity onPress={()=> router.push("/(tabs)/home")} style={tw`items-center pt-2`}>
+            <TouchableOpacity onPress={() => router.push("/(tabs)/home")} style={tw`items-center pt-2`}>
               <Text style={tw`text-amber-500 font-semibold text-base`}>Guest User</Text>
             </TouchableOpacity>
 
